@@ -1,8 +1,12 @@
+import { Balance } from "./balance";
+import WalletButtons from "./walletButtons";
+
 export const Main = () => {
 
   return (
-    <div className="bg-slate-900 h-screen w-screen absolute">
-      
+    <div className="bg-black h-screen w-screen absolute">
+      <WalletButtons/>
+      <Balance/>
     </div>
   );
 };
