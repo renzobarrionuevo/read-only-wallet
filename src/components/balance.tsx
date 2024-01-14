@@ -1,45 +1,116 @@
-import { useState, ChangeEvent } from "react";
+import React, { useState, useEffect } from "react";
+
+type Item = {
+  name:string;
+  token: string;
+  amount: string;
+  priceUSD: string;
+  priceEUR: string;
+};
 
 export const Balance = () => {
-  const [wallet, setWallet] = useState("qwedsdk3243kfk323k4");
-  const [amount, setAmount] = useState("10000");
+  const [showUSD, setShowUSD] = useState(true);
+  const [buttonUSDPressed, setButtonUSDPressed] = useState(true);
+  const [buttonEURPressed, setButtonEURPressed] = useState(false);
+  const [total, setTotal] = useState(0);
 
-  const handleWalletChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setWallet(event.target.value);
+  let respuestaAPI: Item[] = [
+    {
+      name: 'Evmos',
+      token: 'Evmos',
+      amount: '100',
+      priceUSD: '0.11',
+      priceEUR: '0.10',
+    },
+    {
+      name: 'USD Coin',
+      token: 'USDC',
+      amount: '10',
+      priceUSD: '1.1',
+      priceEUR: '0.9',
+    },
+    {
+      name: 'Osmosis',
+      token: 'Osmo',
+      amount: '1',
+      priceUSD: '1.8',
+      priceEUR: '1.6',
+    },
+  ];
+
+  useEffect(() => {
+    // Calculate the total based on the selected fiat
+    let sum = 0;
+    respuestaAPI.forEach((e: Item) => {
+      sum += showUSD ? parseFloat(e.priceUSD)*parseFloat(e.amount) : parseFloat(e.priceEUR)*parseFloat(e.amount);
+    });
+    setTotal(sum);
+  }, [showUSD, respuestaAPI]);
+
+  // Modify the booleans to determine whether the values are in USD or EUR
+  const handleUSDClick = () => {
+    setShowUSD(true);
+    setButtonUSDPressed(true);
+    setButtonEURPressed(false);
+  };
+
+  const handleEURClick = () => {
+    setShowUSD(false);
+    setButtonUSDPressed(false);
+    setButtonEURPressed(true);
   };
 
   return (
-    <div>
-      <div className="mx-auto flex flex-row rounded-xl bg-[#262017] p-6 w-10/12 md:w-2/3">
-        <div className="w-2/3 flex-col">
-          <div>
-            <p className="text-sm font-extrabold text-stone-500">Address</p>
-          </div>
-          <div className="flex">
-            {/* input wallet */}
-            <input
-              type="text"
-              className="w-full pt-1 pl-2 text-2xl font-sans text-white bg-stone-900 rounded-md border-none shadow-inner focus:border-orange-500"
-              value={wallet}
-              onChange={handleWalletChange}
-            />
-          </div>
+    <div className='mx-auto mt-5 w-10/12 md:w-2/3'>
+      <div className="mx-auto flex flex-row rounded-t-xl bg-[#423D37] px-5 pb-2 pt-5 text-white">
+        <div className="w-1/2">
+          <p className="text-left font-bold text-stone-900">Balance</p>
         </div>
-        <div className="w-1/3 text-right">
-          <div>
-            <div className="pt-4 align-end">
-              <div className="float-right ml-1">
-                <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline">
-                  Send
-                </button>
+        <div className="w-1/2 flex justify-end items-center space-x-2">
+          <button
+            className={`px-3 py-1 bg-stone-700 text-white rounded-xl ${
+              buttonUSDPressed ? 'bg-stone-900 text-stone-600' : 'bg-stone-600'
+            }`}
+            onClick={handleUSDClick}
+          >
+            USD
+          </button>
+          <button
+            className={`px-3 py-1 bg-stone-700 text-white rounded-xl ${
+              buttonEURPressed ? 'bg-stone-900 text-stone-600' : 'bg-stone-600'
+            }`}
+            onClick={handleEURClick}
+          >
+            EUR
+          </button>
+        </div>
+      </div>
+      <div className="mx-auto flex-col bg-stone-900 px-5 pb-5 text-white">
+        {respuestaAPI.map((e: Item, i: number) => {
+          return (
+            <div className="flex flex-row pt-4" key={i}>
+              <div className="w-1/2">
+                <p className="text-left">{e.name}</p>
               </div>
-              <div className="float-right mr-1">
-              <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline">
-                  Receive
-                </button>
+              <div className="w-1/2">
+              <p className="text-right">
+                  {showUSD 
+                  ? (parseFloat(e.priceUSD) * parseFloat(e.amount)).toFixed(2) : (parseFloat(e.priceEUR) * parseFloat(e.amount)).toFixed(2)
+                  
+                  } {showUSD ? "USD" : "EUR"}
+              </p>
+                <p className="text-right text-xs text-stone-500">{e.amount} {e.token}</p>
               </div>
             </div>
-          </div>
+          );
+        })}
+      </div>
+      <div className="mx-auto flex flex-row rounded-b-xl bg-[#262017] px-5 py-4 text-white">
+        <div className="w-1/2">
+          <p className="text-left font-bold text-white">Total</p>
+        </div>
+        <div className="w-1/2 flex justify-end items-center space-x-2">
+        <p>{total.toFixed(2)} {showUSD ? "USD" : "EUR"}</p>
         </div>
       </div>
     </div>
