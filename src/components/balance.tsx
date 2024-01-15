@@ -62,11 +62,11 @@ export const Balance = () => {
 
   return (
     <div className='mx-auto mt-5 w-10/12 md:w-2/3'>
-      <div className="mx-auto flex flex-row rounded-t-xl bg-[#423D37] px-5 pb-2 pt-5 text-white">
+      <div className="mx-auto flex flex-row rounded-t-xl bg-[#423D37] px-5 pb-2 pt-3 text-white">
         <div className="w-1/2">
-          <p className="text-left font-bold text-stone-900">Balance</p>
+          <p className="text-left font-bold text-stone-900 pt-1">Balance</p>
         </div>
-        <div className="w-1/2 flex justify-end items-center space-x-2">
+        <div className="w-1/2 flex justify-end space-x-2">
           <button
             className={`px-3 py-1 bg-stone-700 text-white rounded-xl ${
               buttonUSDPressed ? 'bg-stone-900 text-stone-600' : 'bg-stone-600'

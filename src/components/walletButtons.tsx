@@ -18,10 +18,10 @@ const WalletButtons = () => {
   };
 
   return (
-    <div className="flex justify-end space-x-4 w-2/3 mx-auto m-3">
+    <div className="flex justify-end space-x-4 w-2/3 mx-auto m-2">
       <button
-        className={`rounded-full bg-orange-500 text-white p-3 focus:outline-none transform transition-all ${
-          metamaskConnected ? 'w-50' : 'w-12'
+        className={`rounded-full text-white p-1 border-white border-0 focus:outline-none transform transition-all ${
+          metamaskConnected ? 'w-50' : 'w-10'
         }`}
         onClick={handleMetamaskClick}
       >
@@ -34,8 +34,8 @@ const WalletButtons = () => {
         )}
       </button>
       <button
-        className={`rounded-full bg-blue-500 text-white p-3 focus:outline-none transform transition-all ${
-          keplerConnected ? 'w-50' : 'w-12'
+        className={`rounded-full border-white border-0 text-white p-2 focus:outline-none transform transition-all ${
+          keplerConnected ? 'w-50' : 'w-10'
         }`}
         onClick={handleKeplerClick}
       >
