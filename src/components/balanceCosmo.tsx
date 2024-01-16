@@ -25,14 +25,6 @@ type Pagination = {
   total: string;
 };
 
-// Definir un tipo para los precios de las monedas (posiblemente lo tengo que sacar)
-type Prices = {
-  [denom: string]: {
-    priceUSD: string;
-    priceEUR: string;
-  };
-};
-
 // Defino la estructura del llamado a precios
 type ApiPrices = {
   [denom: string]: {
@@ -51,9 +43,18 @@ type ApiPrices = {
     usd: number;
     eur: number;
   };
+  weth: {
+    usd: number;
+    eur: number;
+  };
+  tether: {
+    usd: number;
+    eur: number;
+  };
 };
 
 export const BalanceCosmo = ({ walletEVMOS, apiPriceData }: { walletEVMOS: string, apiPriceData: ApiPrices | null }) => {
+  
   const [showUSD, setShowUSD] = useState(true);
   const [buttonUSDPressed, setButtonUSDPressed] = useState(true);
   const [buttonEURPressed, setButtonEURPressed] = useState(false);
@@ -63,12 +64,10 @@ export const BalanceCosmo = ({ walletEVMOS, apiPriceData }: { walletEVMOS: strin
   // Función para mapear la respuesta de la API
   const mapApiResponse = (balances: Balance[], prices: ApiPrices | null): Item[] => {
   
-    console.log('esto es apiPriceData:', apiPriceData)
     return balances.map((balance) => {
       // Convertir "aevmos" a "Evmos"
       const denom = balance.denom === "aevmos" ? "evmos" : balance.denom;
       
-      console.log('esto es denom:',denom)
       return {
         name: denom,
         token: denom,

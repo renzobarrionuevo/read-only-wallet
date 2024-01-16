@@ -23,6 +23,14 @@ type ApiPrices = {
     usd: number;
     eur: number;
   };
+  weth: {
+    usd: number;
+    eur: number;
+  };
+  tether: {
+    usd: number;
+    eur: number;
+  };
 };
 
 export const Main = () => {
