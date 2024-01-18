@@ -5,34 +5,8 @@ import { Transactions } from "./transactions";
 import WalletButtons from "./walletButtons";
 import { ethToEvmos, evmosToEth } from "@evmos/address-converter";
 import axios, { AxiosResponse } from "axios";
+import { ApiPrices } from "@/types/types";
 
-
-type ApiPrices = {
-  [denom: string]: {
-    usd: number;
-    eur: number;
-  };
-  evmos: {
-    usd: number;
-    eur: number;
-  };
-  osmosis: {
-    usd: number;
-    eur: number;
-  };
-  "usd-coin": {
-    usd: number;
-    eur: number;
-  };
-  weth: {
-    usd: number;
-    eur: number;
-  };
-  tether: {
-    usd: number;
-    eur: number;
-  };
-};
 
 export const Main = () => {
   const [wallet, setWallet] = useState("");

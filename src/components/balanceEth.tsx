@@ -3,6 +3,7 @@ import { useBalance } from "wagmi";
 import { formatWalletAddress } from "../functions/walletUtils";
 import { divideAmount } from "../functions/utils";
 import { ApiPrices, ETHBalance, Balance, Item } from "@/types/types";
+import { useRouter } from 'next/router';
 
 
 export const BalanceEth = ({
@@ -102,6 +103,7 @@ export const BalanceEth = ({
     //Function that executes fetchData and calculates the total of the balances in USD or EUR
     const fetchDataAndCalculateTotal = async () => {
       try {
+
         const { mappedResponseAPI } = await fetchData(walletETH);
 
         if (mappedResponseAPI) {
@@ -123,9 +125,10 @@ export const BalanceEth = ({
         setRespuestaAPI([]);
       }
     };
-
+    
     fetchDataAndCalculateTotal();
-  }, [showUSD, walletETH,balanceEvmos,balanceUSDC, balanceWETH, balanceOSMO, balanceUSDT]);
+
+  }, [showUSD, walletETH]);
 
 
 //Function that modifies the state when pressing USD and EUR buttons
