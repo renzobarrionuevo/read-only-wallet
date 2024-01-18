@@ -6,6 +6,7 @@ import WalletButtons from "./walletButtons";
 import { ethToEvmos, evmosToEth } from "@evmos/address-converter";
 import axios, { AxiosResponse } from "axios";
 
+
 type ApiPrices = {
   [denom: string]: {
     usd: number;
@@ -70,8 +71,7 @@ export const Main = () => {
       // Acceder a los datos de la respuesta
       const data: ApiPrices = response.data;
       setApiPriceData(data); //almaceno los datos en el estado
-      console.log(data)
-      console.log(apiPriceData)
+    
       return data; //Devuelvo los datos para 
       
 
@@ -92,7 +92,7 @@ export const Main = () => {
       <WalletButtons setWallet={setWallet} />
       <Address wallet={wallet} setWallet={setWallet} walletETH={walletETH} walletEVMOS={walletEVMOS} />
       <Balance walletETH={walletETH} walletEVMOS={walletEVMOS} apiPriceData={apiPriceData}/>
-      <Transactions />
+      <Transactions walletEVMOS={walletEVMOS}/>
     </div>
   );
 };
