@@ -121,10 +121,14 @@ export const Transactions = ({ walletEVMOS }: { walletEVMOS: string }) => {
                     <p className="text-stone-500">Hash: </p>
                     {isSmallScreen ? (
                       // Only apply HashString if screen is smaller than 767px           
-                        <p>{HashString(e.hash)}</p>
+                      <a href={`https://escan.live/tx/` + e.hash} target="_blank">
+                      <p>{HashString(e.hash)}</p>
+                    </a>
                     ) : (
                       // For larger screens
+                      <a href={`https://escan.live/tx/` + e.hash} target="_blank">
                       <p>{e.hash}</p>
+                    </a>
                     )}
                   </div>
                   <div className="flex items-baseline space-x-1 mt-2">
