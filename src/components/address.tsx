@@ -50,7 +50,7 @@ export const Address = ({
             </button>
           </div>
           <div className="flex items-baseline space-x-1 mt-1">
-            <p className="text-stone-500">bench32:</p>
+            <p className="text-stone-500">bech32:</p>
             <p className="text-xs text-stone-300">{walletEVMOS}</p>
             <button
               onClick={onCopyEVMOS}

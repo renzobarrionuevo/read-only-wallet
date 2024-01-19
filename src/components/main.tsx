@@ -34,31 +34,30 @@ export const Main = () => {
     }
   }, [wallet]);
 
-  // Función para hacer una solicitud GET
+  // Function to make a GET Price request
   const fetchData = async () => {
     try {
-      // Realizar la solicitud GET a la URL de coingecko
+      // Make the GET request to the coingecko URL
       const response: AxiosResponse<ApiPrices> = await axios.get(
         "https://api.coingecko.com/api/v3/simple/price?ids=evmos%2Cosmosis%2Cusd-coin&vs_currencies=usd%2Ceur"
       );
 
-      // Acceder a los datos de la respuesta
+      // Access response data
       const data: ApiPrices = response.data;
-      setApiPriceData(data); //almaceno los datos en el estado
+      setApiPriceData(data); //Store the data in the state
     
-      return data; //Devuelvo los datos para 
+      return data;
       
 
     } catch (error) {
-      // Manejar errores en caso de que la solicitud falle
       console.error("Error al realizar la solicitud GET:", error);
       return { data: [] };
     }
   };
 
   useEffect(() => {
-    fetchData(); // Llamar a fetchData cuando se monte el componente
-  }, []); // El segundo argumento es un arreglo de dependencias. Si está vacío, useEffect solo se ejecuta una vez.
+    fetchData(); // Call fetchData when component is mounted
+  }, []); // The second argument is a dependency array. If empty, useEffect is only executed once.
 
 
   return (
