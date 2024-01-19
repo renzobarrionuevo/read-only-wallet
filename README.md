@@ -362,7 +362,7 @@ It will return all the transactions made with the wallet, with all their data. I
 
 At this point, we have all the data to be able to assemble our wallet. In my case, I decided to give it a simple but quick-read design. Where we can see the balances for each type of token and all the transactions that were made with the wallet. It also functions as a hex to bech32 format converter and vice versa; and you can also enter a wallet without the need to connect Metamask or Keplr to see its status.
 
-![Captura de pantalla 2024-01-18 a la(s) 22.00.09.png](<https://github.com/renzobarrionuevo/read-only-wallet/public/assets/Captura_de_pantalla_2024-01-18_a_la(s)_22.00.09.png>)
+![screen.png](https://github.com/renzobarrionuevo/read-only-wallet/blob/main/public/assets/screen.png)
 
 # Documentation:
 
