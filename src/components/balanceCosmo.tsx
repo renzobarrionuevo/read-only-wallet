@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
-import { divideAmount } from '../functions/utils'
+import { divideAmount } from "../functions/utils";
 import { ApiPrices } from "@/types/types"; //structure of the API prices response
 import { CosmoBalance, Balance, Item } from "@/types/types";
 
-
-export const BalanceCosmo = ({ walletEVMOS, apiPriceData }: { walletEVMOS: string, apiPriceData: ApiPrices | null }) => {
-  
+export const BalanceCosmo = ({
+  walletEVMOS,
+  apiPriceData,
+}: {
+  walletEVMOS: string;
+  apiPriceData: ApiPrices | null;
+}) => {
   const [showUSD, setShowUSD] = useState(true);
   const [buttonUSDPressed, setButtonUSDPressed] = useState(true);
   const [buttonEURPressed, setButtonEURPressed] = useState(false);
@@ -14,22 +18,29 @@ export const BalanceCosmo = ({ walletEVMOS, apiPriceData }: { walletEVMOS: strin
   const [respuestaAPI, setRespuestaAPI] = useState<Item[]>([]);
 
   // Function to map the API response
-  const mapApiResponse = (balances: Balance[], prices: ApiPrices | null): Item[] => {
-  
+  const mapApiResponse = (
+    balances: Balance[],
+    prices: ApiPrices | null
+  ): Item[] => {
     return balances.map((balance) => {
       // Convert "aevmos" a "evmos"
       const denom =
-        balance.denom === "aevmos" ? "evmos" :
-        balance.denom === "uosmo" ? "osmosis" :
-        balance.denom === "uusdc" ? "usd-coin" :
-        balance.denom === "weth-wei" ? "weth" :
-        balance.denom === "uusdt" ? "tether" :
-        balance.denom;
-    
+        balance.denom === "aevmos"
+          ? "evmos"
+          : balance.denom === "uosmo"
+          ? "osmosis"
+          : balance.denom === "uusdc"
+          ? "usd-coin"
+          : balance.denom === "weth-wei"
+          ? "weth"
+          : balance.denom === "uusdt"
+          ? "tether"
+          : balance.denom;
+
       return {
         name: denom,
         token: denom,
-        amount: divideAmount(balance.amount,balance.denom),
+        amount: divideAmount(balance.amount, balance.denom),
         priceUSD: prices?.[denom]?.usd.toString() || "0",
         priceEUR: prices?.[denom]?.eur.toString() || "0",
       };
@@ -38,7 +49,7 @@ export const BalanceCosmo = ({ walletEVMOS, apiPriceData }: { walletEVMOS: strin
 
   // Function to make a GET request and return a mapped response
   const fetchData = async (walletEVMOS: string) => {
-    if (walletEVMOS === "") return { mappedResponseAPI: []};
+    if (walletEVMOS === "") return { mappedResponseAPI: [] };
     try {
       // Make the GET request to the desired URL
       const response: AxiosResponse<CosmoBalance> = await axios.get(
@@ -73,8 +84,10 @@ export const BalanceCosmo = ({ walletEVMOS, apiPriceData }: { walletEVMOS: strin
           let sum = 0;
           mappedResponseAPI.forEach((mappedResponseAPI) => {
             sum += showUSD
-              ? parseFloat(mappedResponseAPI.amount) * parseFloat(mappedResponseAPI.priceUSD) 
-              : parseFloat(mappedResponseAPI.amount) * parseFloat(mappedResponseAPI.priceEUR);
+              ? parseFloat(mappedResponseAPI.amount) *
+                parseFloat(mappedResponseAPI.priceUSD)
+              : parseFloat(mappedResponseAPI.amount) *
+                parseFloat(mappedResponseAPI.priceEUR);
           });
 
           setTotal(sum);
@@ -105,7 +118,9 @@ export const BalanceCosmo = ({ walletEVMOS, apiPriceData }: { walletEVMOS: strin
     <div className="w-full md:w-1/2">
       <div className="mx-auto flex flex-row rounded-t-xl bg-[#262017] px-5 pb-2 pt-3 text-white">
         <div className="w-1/2">
-          <p className="text-left font-bold text-[#ED4E33] pt-1">BALANCE COSMO</p>
+          <p className="text-left font-bold text-[#ED4E33] pt-1">
+            BALANCE COSMO
+          </p>
         </div>
         <div className="w-1/2 flex justify-end space-x-2">
           <button
@@ -129,7 +144,7 @@ export const BalanceCosmo = ({ walletEVMOS, apiPriceData }: { walletEVMOS: strin
       <div className="mx-auto flex-col bg-stone-900 px-5 pb-5 text-white">
         {respuestaAPI.map((e: Item, i: number) => {
           return (
-            <div className="flex flex-row pt-4" key={"balanceCosmo" +i}>
+            <div className="flex flex-row pt-4" key={"balanceCosmo" + i}>
               <div className="w-1/2">
                 <p className="text-left">{e.name}</p>
               </div>

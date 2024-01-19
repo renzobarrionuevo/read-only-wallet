@@ -7,7 +7,6 @@ import { ethToEvmos, evmosToEth } from "@evmos/address-converter";
 import axios, { AxiosResponse } from "axios";
 import { ApiPrices } from "@/types/types";
 
-
 export const Main = () => {
   const [wallet, setWallet] = useState("");
   const [apiPriceData, setApiPriceData] = useState<ApiPrices | null>(null);
@@ -45,10 +44,8 @@ export const Main = () => {
       // Access response data
       const data: ApiPrices = response.data;
       setApiPriceData(data); //Store the data in the state
-    
-      return data;
-      
 
+      return data;
     } catch (error) {
       console.error("Error al realizar la solicitud GET:", error);
       return { data: [] };
@@ -59,13 +56,21 @@ export const Main = () => {
     fetchData(); // Call fetchData when component is mounted
   }, []); // The second argument is a dependency array. If empty, useEffect is only executed once.
 
-
   return (
     <div className="bg-black w-screen min-h-screen absolute">
       <WalletButtons setWallet={setWallet} />
-      <Address wallet={wallet} setWallet={setWallet} walletETH={walletETH} walletEVMOS={walletEVMOS} />
-      <Balance walletETH={walletETH} walletEVMOS={walletEVMOS} apiPriceData={apiPriceData}/>
-      <Transactions walletEVMOS={walletEVMOS}/>
+      <Address
+        wallet={wallet}
+        setWallet={setWallet}
+        walletETH={walletETH}
+        walletEVMOS={walletEVMOS}
+      />
+      <Balance
+        walletETH={walletETH}
+        walletEVMOS={walletEVMOS}
+        apiPriceData={apiPriceData}
+      />
+      <Transactions walletEVMOS={walletEVMOS} />
     </div>
   );
 };

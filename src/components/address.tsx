@@ -1,7 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { useClipboard } from "@chakra-ui/react";
 
-
 export const Address = ({
   wallet,
   setWallet,
@@ -19,9 +18,10 @@ export const Address = ({
   };
 
   //Hook to copy to clipboard
-  const { onCopy: onCopyETH, hasCopied: hasCopiedETH } = useClipboard(walletETH);
-  const { onCopy: onCopyEVMOS, hasCopied: hasCopiedEVMOS } = useClipboard(walletEVMOS);
-
+  const { onCopy: onCopyETH, hasCopied: hasCopiedETH } =
+    useClipboard(walletETH);
+  const { onCopy: onCopyEVMOS, hasCopied: hasCopiedEVMOS } =
+    useClipboard(walletEVMOS);
 
   return (
     <div>

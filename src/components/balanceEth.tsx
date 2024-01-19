@@ -3,8 +3,7 @@ import { useBalance } from "wagmi";
 import { formatWalletAddress } from "../functions/walletUtils";
 import { divideAmount } from "../functions/utils";
 import { ApiPrices, ETHBalance, Balance, Item } from "@/types/types";
-import { useRouter } from 'next/router';
-
+import { useRouter } from "next/router";
 
 export const BalanceEth = ({
   walletETH,
@@ -13,7 +12,6 @@ export const BalanceEth = ({
   walletETH: string;
   apiPriceData: ApiPrices | null;
 }) => {
-
   const [showUSD, setShowUSD] = useState(true);
   const [buttonUSDPressed, setButtonUSDPressed] = useState(true);
   const [buttonEURPressed, setButtonEURPressed] = useState(false);
@@ -51,22 +49,30 @@ export const BalanceEth = ({
     //axelas
   });
 
-// Function that takes the results from the API Prices and Wagmi's useBalance and returns them mapped.
-  const mapApiResponse = (balances: Balance[], prices: ApiPrices | null): Item[] => {
+  // Function that takes the results from the API Prices and Wagmi's useBalance and returns them mapped.
+  const mapApiResponse = (
+    balances: Balance[],
+    prices: ApiPrices | null
+  ): Item[] => {
     return balances.map((balance) => {
-        const denom =
-        balance.denom === "Evmos" ? "evmos" :
-        balance.denom === "OSMO" ? "osmosis" :
-        balance.denom === "USDC.axl" ? "usd-coin" :
-        balance.denom === "WETH.axl" ? "weth" :
-        balance.denom === "USDT.axl" ? "tether" :
-        balance.denom;
+      const denom =
+        balance.denom === "Evmos"
+          ? "evmos"
+          : balance.denom === "OSMO"
+          ? "osmosis"
+          : balance.denom === "USDC.axl"
+          ? "usd-coin"
+          : balance.denom === "WETH.axl"
+          ? "weth"
+          : balance.denom === "USDT.axl"
+          ? "tether"
+          : balance.denom;
 
       return {
         //The format is the same for both ETH and Cosmo.
         name: balance.denom,
         token: denom,
-        amount: divideAmount(balance.amount,balance.denom),
+        amount: divideAmount(balance.amount, balance.denom),
         priceUSD: prices?.[denom]?.usd.toString() || "0",
         priceEUR: prices?.[denom]?.eur.toString() || "0",
       };
@@ -80,15 +86,24 @@ export const BalanceEth = ({
       // Create an array of balances to handle responses in the same way as in Cosmos
       const balances: Balance[] = [
         { denom: "Evmos", amount: balanceEvmos?.data?.value.toString() || "0" },
-        { denom: "USDC.axl", amount: balanceUSDC?.data?.value.toString() || "0",},
-        { denom: "WETH-axl", amount: balanceWETH?.data?.value.toString() || "0" },
+        {
+          denom: "USDC.axl",
+          amount: balanceUSDC?.data?.value.toString() || "0",
+        },
+        {
+          denom: "WETH-axl",
+          amount: balanceWETH?.data?.value.toString() || "0",
+        },
         { denom: "OSMO", amount: balanceOSMO?.data?.value.toString() || "0" },
-        { denom: "USDT.axl", amount: balanceUSDT?.data?.value.toString() || "0" },
+        {
+          denom: "USDT.axl",
+          amount: balanceUSDT?.data?.value.toString() || "0",
+        },
       ];
 
       // data: object of type ETHBalance that stores the balances array.
       const data: ETHBalance = { balances };
-      
+
       return {
         mappedResponseAPI: mapApiResponse(data.balances, apiPriceData),
       };
@@ -103,7 +118,6 @@ export const BalanceEth = ({
     //Function that executes fetchData and calculates the total of the balances in USD or EUR
     const fetchDataAndCalculateTotal = async () => {
       try {
-
         const { mappedResponseAPI } = await fetchData(walletETH);
 
         if (mappedResponseAPI) {
@@ -125,13 +139,11 @@ export const BalanceEth = ({
         setRespuestaAPI([]);
       }
     };
-    
-    fetchDataAndCalculateTotal();
 
+    fetchDataAndCalculateTotal();
   }, [showUSD, walletETH]);
 
-
-//Function that modifies the state when pressing USD and EUR buttons
+  //Function that modifies the state when pressing USD and EUR buttons
   const handleUSDClick = () => {
     setShowUSD(true);
     setButtonUSDPressed(true);
